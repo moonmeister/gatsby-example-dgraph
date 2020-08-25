@@ -1,0 +1,8 @@
+# package manger
+node_modules
+
+
+# gatsby build artifacts
+.cache
+public
+
