@@ -1,7 +1,7 @@
 const fs = require("fs-extra")
 const fetch = require("node-fetch")
 const path = require("path")
-const { print } = require("gatsby/graphql")
+const { print, isObjectType } = require("gatsby/graphql")
 const {
   sourceAllNodes,
   sourceNodeChanges,
@@ -15,7 +15,7 @@ const {
 
 const fragmentsDir = __dirname + "/dgraph-fragments"
 const debugDir = __dirname + "../../.cache/dgraph-graphql-documents"
-const gatsbyTypePrefix = `Dgraph_`
+const gatsbyTypePrefix = `Dgraph`
 
 let schema
 let gatsbyNodeTypes
@@ -38,46 +38,41 @@ async function getSchema(pluginOptions) {
   return schema
 }
 
-async function getGatsbyNodeTypes() {
+async function getGatsbyNodeTypes(schema, { include, limit }) {
   if (gatsbyNodeTypes) {
     return gatsbyNodeTypes
   }
-  // const schema = await getSchema()
-  // const fromIface = (ifaceName, doc) => {
-  //   const iface = schema.getType(ifaceName)
-  //   return schema.getPossibleTypes(iface).map(type => ({
-  //     remoteTypeName: type.name,
-  //     queries: doc(type.name),
-  //   }))
-  // }
-  // prettier-ignore
-  return (gatsbyNodeTypes = [
-    {
-      remoteTypeName: `Task`,
-      queries: `
-        query LIST_TASKS {
-          queryTask(first: $limit, offset: $offset) { ..._TaskId_ }
+
+  const queryType = schema.getQueryType()
+  const queryFields = queryType.getFields()
+  const types = Object.keys(queryFields).map(field => queryFields[field].type).filter(type => isObjectType(type)).filter(type => include.includes(type.name))
+
+  return gatsbyNodeTypes = types.map((type) => ({
+    remoteTypeName: type.name,
+    queries: `
+      query LIST_${type.name} {
+        #  query${type.name}(first: $limit, offset: $offset) {
+          query${type.name}(first: ${limit}) {
+          ..._${type.name}Id_
         }
-        fragment _TaskId_ on Task { __typename id }
-      `,
-    },
-    {
-      remoteTypeName: `User`,
-      queries: `
-        query LIST_USERS {
-          queryUser(first: $limit, offset: $offset) { ..._UserId_ }
-        }
-        fragment _UserId_ on User { __typename id }
-      `,
-    },
-  ]
-  )
+      }
+
+      query NODE_${type.name} {
+        get${type.name}(id: $id) { ..._${type.name}Id_ }
+      }
+
+      fragment _${type.name}Id_ on ${type.name} { id }
+    `,
+  }))
+
 }
 
 async function writeDefaultFragments(pluginOptions) {
+  const schema = await getSchema(pluginOptions)
+
   const defaultFragments = generateDefaultFragments({
-    schema: await getSchema(pluginOptions),
-    gatsbyNodeTypes: await getGatsbyNodeTypes(),
+    schema,
+    gatsbyNodeTypes: await getGatsbyNodeTypes(schema, pluginOptions),
   })
   for (const [remoteTypeName, fragment] of defaultFragments) {
     const filePath = path.join(fragmentsDir, `${remoteTypeName}.graphql`)
@@ -112,7 +107,7 @@ async function getSourcingConfig(gatsbyApi, pluginOptions) {
   }
 
   const schema = await getSchema(pluginOptions)
-  const gatsbyNodeTypes = await getGatsbyNodeTypes()
+  const gatsbyNodeTypes = await getGatsbyNodeTypes(schema, pluginOptions)
 
   const documents = await compileNodeQueries({
     schema,
@@ -127,7 +122,7 @@ async function getSourcingConfig(gatsbyApi, pluginOptions) {
     schema,
     gatsbyNodeDefs: buildNodeDefinitions({ gatsbyNodeTypes, documents }),
     gatsbyTypePrefix,
-    execute: wrapQueryExecutorWithQueue(createExecute(pluginOptions), { concurrency: 10 }),
+    execute: wrapQueryExecutorWithQueue(createExecute(pluginOptions), { concurrency: 1 }),
     verbose: true,
   })
 }
@@ -136,9 +131,8 @@ function createExecute(pluginOptions) {
   const { endpoint, token } = pluginOptions
 
   return async function execute({ operationName, query, variables = {} }) {
-    // console.log(operationName, variables)
-    const body = JSON.stringify(query, null, 2)
-    console.log(body)
+    // console.log('query: ', JSON.stringify(query, null, 2))
+
     const res = await fetch(endpoint, {
       method: "POST",
       body: JSON.stringify({ query, variables, operationName }),
@@ -147,9 +141,14 @@ function createExecute(pluginOptions) {
         "X-Auth-Token": `${token}`,
       },
     })
-    const resp = await res.json()
-    console.log("response:", JSON.stringify(resp, null, 2))
-    return resp
+    const data = await res.json()
+    // console.log("response:", JSON.stringify(data, null, 2))
+
+    if (data && data.errors) {
+      throw new Error(JSON.stringify(data.errors, null, 2))
+    }
+
+    return data
   }
 }
 
@@ -167,37 +166,16 @@ exports.createSchemaCustomization = async (gatsbyApi, pluginOptions) => {
 
 exports.sourceNodes = async (gatsbyApi, pluginOptions) => {
 
-  const { cache } = gatsbyApi
+  const { cache, webhookBody } = gatsbyApi
   const config = await getSourcingConfig(gatsbyApi, pluginOptions)
   const cached = (await cache.get(`DGRAPH_SOURCED`)) || false
 
-  if (cached) {
-    // Applying changes since the last sourcing
-    // const nodeEvents = [
-    //   {
-    //     eventName: "DELETE",
-    //     remoteTypeName: "blog_blog_Entry",
-    //     remoteId: { __typename: "blog_blog_Entry", id: "422" },
-    //   },
-    //   {
-    //     eventName: "UPDATE",
-    //     remoteTypeName: "blog_blog_Entry",
-    //     remoteId: { __typename: "blog_blog_Entry", id: "421" },
-    //   },
-    //   {
-    //     eventName: "UPDATE",
-    //     remoteTypeName: "blog_blog_Entry",
-    //     remoteId: { __typename: "blog_blog_Entry", id: "18267" },
-    //   },
-    //   {
-    //     eventName: "UPDATE",
-    //     remoteTypeName: "blog_blog_Entry",
-    //     remoteId: { __typename: "blog_blog_Entry", id: "11807" },
-    //   },
-    // ]
-    console.log(`Sourcing delta!`)
-    // await sourceNodeChanges(config, { nodeEvents })
-    // return
+  if (cached && Array.isArray(webhookBody)) {
+    console.log(`Sourcing delta!`, JSON.stringify(webhookBody, null, 2))
+    await sourceNodeChanges(config, { nodeEvents: webhookBody })
+    return
+  } else if (cached) {
+    console.log(`loading from cache`)
   }
 
   await sourceAllNodes(config)

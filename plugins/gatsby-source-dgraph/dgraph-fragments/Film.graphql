@@ -1,0 +1,39 @@
+fragment Film on Film {
+  remoteId: id
+  initial_release_date
+  name
+  description
+  prequel {
+    ... on Film {
+      remoteId: id
+    }
+  }
+  sequel {
+    ... on Film {
+      remoteId: id
+    }
+  }
+  starring {
+    ... on Performance {
+      id
+      actor {
+        ... on Actor {
+          id
+          name
+          performances {
+            ... on Performance {
+                remoteId: id
+                character {
+                  ... on Character {
+                    remoteId: id
+                    name
+                  }
+                }
+              }
+          }
+        }
+      }
+    }
+  }
+  tagline
+}

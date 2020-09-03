@@ -1,12 +1,43 @@
 import * as React from "react"
 
+import { useForm, usePlugin } from 'tinacms'
+
+import Layout from "../components/Layout"
+
 export default function HomePage() {
-  const { title } = { title: "Filler" }
+
+  const formConfig = {
+    id: 'dgraph-tina-index',
+    label: 'Edit Page',
+    fields: [
+      {
+        name: 'title',
+        label: 'Title',
+        component: 'text',
+      },
+      {
+        name: 'body',
+        label: 'Body',
+        component: 'html',
+      }
+    ],
+    initialValues: {
+      title: 'The Film Database',
+      body: 'Enjoy!'
+    },
+    onSubmit: async () => {
+      window.alert('Saved!');
+    },
+  }
+
+  const [modifiedValues, form] = useForm(formConfig)
+  usePlugin(form)
 
   return (
-    <main>
-      <h1>{title}</h1>
-      <p>More Coming Soon.</p>
-    </main>
+    <Layout enableEditing>
+      <h1>{modifiedValues.title}</h1>
+
+      <div dangerouslySetInnerHTML={{ __html: modifiedValues.body }} />
+    </Layout>
   )
 }

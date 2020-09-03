@@ -7,14 +7,29 @@
   "author": "Alex Moon <alex.jared.moon@gmail.com>",
   "license": "0BSD",
   "dependencies": {
+    "cross-env": "^7.0.2",
+    "dotenv": "^8.2.0",
     "gatsby": "^2.24.47",
     "gatsby-graphql-source-toolkit": "^0.4.1",
+    "gatsby-plugin-linaria": "^2.1.0",
+    "gatsby-plugin-preact": "^4.0.9",
+    "gatsby-plugin-tinacms": "^0.29.0",
+    "linaria": "^1.4.0-beta.10",
     "node-fetch": "^2.6.0",
+    "preact": "^10.4.8",
+    "preact-render-to-string": "^5.1.10",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "react-tinacms-editor": "^0.29.0",
+    "react-tinacms-inline": "^0.29.0",
+    "slugify": "^1.4.5",
+    "styled-components": "^5.1.1"
   },
   "scripts": {
-    "dev": "gatsby develop",
-    "build": "gatsby build"
+    "dev": "cross-env GATSBY_EXPERIMENTAL_ROUTING_APIS=1 ENABLE_GATSBY_REFRESH_ENDPOINT=true gatsby develop",
+    "build": "cross-env GATSBY_EXPERIMENTAL_ROUTING_APIS=1 gatsby build"
+  },
+  "devDependencies": {
+    "babel-preset-gatsby": "^0.5.8"
   }
 }

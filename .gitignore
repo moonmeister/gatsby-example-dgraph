@@ -5,4 +5,7 @@ node_modules
 # gatsby build artifacts
 .cache
 public
+.linaria-cache
 
+#.env
+.env.production
