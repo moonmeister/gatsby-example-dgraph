@@ -26,7 +26,7 @@ export default function FilmPage({ data }) {
 
 export const query = graphql`
   query ListFilms {
-    allDgraphFilm {
+    allDgraphFilm(sort: {order: ASC, fields: name}) {
       nodes {
         name
         remoteId

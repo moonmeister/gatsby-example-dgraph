@@ -3,7 +3,6 @@ import Layout from "../../components/Layout"
 import { useForm, usePlugin, useCMS } from 'tinacms'
 
 import { graphqlCRUD } from "../../lib/graphql"
-import { triggerRefresh } from "../../lib/webhook"
 
 export default function ActorPage({ params }) {
   const { id } = params
