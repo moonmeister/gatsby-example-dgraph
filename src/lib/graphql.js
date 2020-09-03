@@ -1,7 +1,8 @@
+
 const GRAPHQL_ENDPOINT = process.env.GATSBY_SLASH_GRPAHQL_ENDPOINT
 
 export async function graphqlCRUD(body) {
-  if (!body || typeof body === "Object") {
+  if (body === null || typeof body !== "object") {
     throw Error("Invalid body, must have body and must be object")
   }
 

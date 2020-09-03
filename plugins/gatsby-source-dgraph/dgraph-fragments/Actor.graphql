@@ -1,0 +1,15 @@
+fragment Actor on Actor {
+  remoteId: id
+  name
+  performances {
+    ... on Performance {
+        remoteId: id
+        character {
+          ... on Character {
+            remoteId: id
+            name
+          }
+        }
+      }
+  }
+}

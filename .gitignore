@@ -9,3 +9,6 @@ public
 
 #.env
 .env.production
+
+#yarn
+*.log

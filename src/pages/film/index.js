@@ -7,9 +7,8 @@ export default function FilmPage({ data }) {
   const { allDgraphFilm: { nodes: allFilms } } = data
 
   return (
-    <Layout enableEditing={false}>
+    <Layout explain={"This page may not be edited. This is static data fetched at build time."}>
       <h1>Films</h1>
-      {/* <pre>{JSON.stringify(allFilms, null, 2)}</pre> */}
       <ul>
         {
           allFilms.map(film => (

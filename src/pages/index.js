@@ -34,7 +34,7 @@ export default function HomePage() {
   usePlugin(form)
 
   return (
-    <Layout enableEditing>
+    <Layout enableEditing explain={"This page may be edited but content is stored in state so changes are lost on refresh."}>
       <h1>{modifiedValues.title}</h1>
 
       <div dangerouslySetInnerHTML={{ __html: modifiedValues.body }} />

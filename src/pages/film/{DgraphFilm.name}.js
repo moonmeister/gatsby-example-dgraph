@@ -69,16 +69,16 @@ export default function FilmPage({ data }) {
   const [filmData, form] = useForm(formConfig)
   usePlugin(form)
   return (
-    <Layout enableEditing={true}>
+    <Layout enableEditing={true} explain={"This page may be edited and previewed here, but is static content sourced at build time. Upon saving edits a incremental build is triggered and delpyed to the Fastly CDN in about 30 seconds."}>
       <article>
         <h1>{filmData.name}</h1>
         <div dangerouslySetInnerHTML={{ __html: filmData.description }} />
         <h2>Starring:</h2>
         <ul>
           {filmData.starring.map(({ actor }) =>
-            actor.map(({ id, name }) => (
+            actor.map(({ remoteId, name }) => (
               <li>
-                <Link key={id} to={`/actor/${id}`}>{name}</Link>
+                <Link key={remoteId} to={`/actor/${remoteId}`}>{name}</Link>
               </li>
             ))
           )}
@@ -96,7 +96,7 @@ fragment FilmPage on DgraphFilm {
       initial_release_date
       starring {
         actor {
-          id
+          remoteId
           name
         }
       }

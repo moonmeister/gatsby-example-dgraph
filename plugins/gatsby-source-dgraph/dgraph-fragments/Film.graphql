@@ -18,7 +18,7 @@ fragment Film on Film {
       id
       actor {
         ... on Actor {
-          id
+          remoteId: id
           name
           performances {
             ... on Performance {

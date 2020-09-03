@@ -6,20 +6,31 @@ import { useCMS } from 'tinacms'
 
 import { css } from "linaria"
 
-function Layout({ children, enableEditing = false }) {
+function Layout({ children, enableEditing = false, explain }) {
   const cms = useCMS()
   const [loginState, setLoginState] = useLocalStorage('authenticated', false)
 
   loginState && enableEditing ? cms.enable() : cms.disable()
   return (
-    <div>
+    <div className={css`
+      display: grid;
+      height: 100vh;
+      grid-template-areas:
+        "header"
+        "content"
+        "footer";
+
+      grid-template-rows: auto 1fr auto;
+      gap: 1em
+  `}>
       <header className={css`
+        grid-area: header;
         display: flex;
         justify-content: space-between;
         align-items: center
         padding: 0em 1em;
       `} >
-        <nav >
+        <nav>
           <ol className={css`
             display: flex;
             list-style: none;
@@ -41,9 +52,14 @@ function Layout({ children, enableEditing = false }) {
         }
       </header>
 
-      <main>{children}</main>
-      <footer>
-
+      <main className={css`
+        grid-area: content;
+      `}>{children}</main>
+      <footer className={css`
+        grid-area: footer;
+      `}>
+        <h2>How this page works:</h2>
+        <p>{explain}</p>
       </footer>
     </div>
 

@@ -3,6 +3,7 @@ import Layout from "../../components/Layout"
 import { useForm, usePlugin, useCMS } from 'tinacms'
 
 import { graphqlCRUD } from "../../lib/graphql"
+import { triggerRefresh } from "../../lib/webhook"
 
 export default function ActorPage({ params }) {
   const { id } = params
@@ -20,24 +21,32 @@ export default function ActorPage({ params }) {
     ],
     loadInitialValues: async () => {
       console.debug("Loading inital values")
-      const { data: { getActor } } = await graphqlCRUD({
-        query: `query fetchActor($id: ID!) {
-          getActor(id: $id) {
-            name
-            performances {
-              character {
-                id
+
+      try {
+        const { data: { getActor } } = await graphqlCRUD({
+          query: `query fetchActor($id: ID!) {
+              getActor(id: $id) {
                 name
+              performances {
+                character {
+                  id
+                  name
+                }
               }
             }
-          }
-        }
-        `, variables: {
-          id
-        }, operationName: `fetchActor`
-      })
+          }`,
+          variables: {
+            id
+          },
+          operationName: `fetchActor`
+        })
 
-      return getActor
+        return getActor
+      } catch (err) {
+        console.error(err)
+        return { error: err.message }
+      }
+
     },
     onSubmit: async (formData) => {
       cms.alerts.info('Saving Content...')
@@ -63,13 +72,13 @@ export default function ActorPage({ params }) {
         })
 
         if (data?.errors) {
-
           console.error(data.errors[0].message)
           cms.alerts.error(data.errors[0].message)
-
-
         } else {
           cms.alerts.success('Saved Content!');
+
+          await triggerRefresh([{ remoteTypeName: 'Actor', eventName: "UPDATE", remoteId: { id: id } }])
+
         }
       } catch (err) {
         console.error(err)
@@ -81,7 +90,7 @@ export default function ActorPage({ params }) {
   usePlugin(form)
 
   return (
-    <Layout enableEditing={true}>
+    <Layout enableEditing={true} explain={"This page is a client side route. Tina CMS reads and writes data from the database directly. It may be edited and previewed here but no deploy/build are requred because data is fetched on load."}>
       {
         actorData?.name ?
           <article>
@@ -91,8 +100,8 @@ export default function ActorPage({ params }) {
               {actorData.performances.map(perf => perf.character.map(character => (<li>{character.name}</li>)))}
             </ul>
           </article>
-          :
-          <h1>Loading page...</h1>
+          : actorData?.error ? <div>Error fetching data: {JSON.stringify(actorData, null, 2)} </div> :
+            <h1>Loading page...</h1>
       }
     </Layout>
 
