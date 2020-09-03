@@ -14,7 +14,7 @@ const {
 } = require("gatsby-graphql-source-toolkit")
 
 const fragmentsDir = __dirname + "/dgraph-fragments"
-const debugDir = __dirname + "../../.cache/dgraph-graphql-documents"
+const debugDir = __dirname + "../.cache/dgraph-graphql-documents"
 const gatsbyTypePrefix = `Dgraph`
 
 let schema
