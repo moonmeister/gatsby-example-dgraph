@@ -76,9 +76,6 @@ export default function ActorPage({ params }) {
           cms.alerts.error(data.errors[0].message)
         } else {
           cms.alerts.success('Saved Content!');
-
-          await triggerRefresh([{ remoteTypeName: 'Actor', eventName: "UPDATE", remoteId: { id: id } }])
-
         }
       } catch (err) {
         console.error(err)

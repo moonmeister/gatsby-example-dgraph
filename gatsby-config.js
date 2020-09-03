@@ -12,7 +12,7 @@ module.exports = {
       resolve: `gatsby-source-dgraph`,
       options: {
         endpoint: process.env.GATSBY_SLASH_GRPAHQL_ENDPOINT || `https://vague-bell.us-west-2.aws.cloud.dgraph.io/graphql`,
-        include: [`Film`, `Actor`],
+        include: [`Film`],
         limit: 25
       }
     },

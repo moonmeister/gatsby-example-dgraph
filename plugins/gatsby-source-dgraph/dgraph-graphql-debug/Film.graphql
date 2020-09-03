@@ -1,5 +1,5 @@
 query LIST_Film {
-  queryFilm(first: 10) {
+  queryFilm(first: 25) {
     remoteTypeName: __typename
     ..._FilmId_
     ...Film
@@ -36,7 +36,7 @@ fragment Film on Film {
       id
       actor {
         ... on Actor {
-          id
+          remoteId: id
           name
           performances {
             ... on Performance {
