@@ -1,0 +1,63 @@
+query LIST_PersonOrEntityAppearingInFilm($limit: Int, $offset: Int) {
+  queryPersonOrEntityAppearingInFilm(first: $limit, offset: $offset) {
+    remoteTypeName: __typename
+    ..._PersonOrEntityAppearingInFilmId_
+    ...Actor__performances__0__appearances__0__person__0
+    ...Film__personal_appearances__0__person__0
+    ...Film__starring__0__appearances__0__person__0
+    ...PersonOrEntityAppearingInFilm
+  }
+}
+
+fragment _PersonOrEntityAppearingInFilmId_ on PersonOrEntityAppearingInFilm {
+  remoteTypeName: __typename
+  remoteId: id
+}
+
+fragment Actor__performances__0__appearances__0__person__0 on PersonOrEntityAppearingInFilm {
+  name
+  films {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+  film {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+}
+
+fragment Film__personal_appearances__0__person__0 on PersonOrEntityAppearingInFilm {
+  name
+  films {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+  film {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+}
+
+fragment Film__starring__0__appearances__0__person__0 on PersonOrEntityAppearingInFilm {
+  name
+  films {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+  film {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+}
+
+fragment PersonOrEntityAppearingInFilm on PersonOrEntityAppearingInFilm {
+  name
+  films {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+  film {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+}

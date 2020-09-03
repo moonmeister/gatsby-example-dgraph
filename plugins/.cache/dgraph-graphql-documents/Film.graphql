@@ -1,0 +1,57 @@
+query LIST_Film {
+  queryFilm(first: 10) {
+    remoteTypeName: __typename
+    ..._FilmId_
+    ...Film
+  }
+}
+
+query NODE_Film($id: ID!) {
+  getFilm(id: $id) {
+    remoteTypeName: __typename
+    ..._FilmId_
+    ...Film
+  }
+}
+
+fragment _FilmId_ on Film {
+  remoteId: id
+}
+
+fragment Film on Film {
+  remoteId: id
+  initial_release_date
+  name
+  description
+  prequel {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+  sequel {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+  starring {
+    ... on Performance {
+      id
+      actor {
+        ... on Actor {
+          id
+          name
+          performances {
+            ... on Performance {
+              remoteId: id
+              character {
+                ... on Character {
+                  remoteId: id
+                  name
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  tagline
+}

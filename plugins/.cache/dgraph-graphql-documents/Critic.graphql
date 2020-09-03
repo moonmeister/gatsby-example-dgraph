@@ -1,0 +1,16 @@
+query LIST_Critic($limit: Int, $offset: Int) {
+  queryCritic(first: $limit, offset: $offset) {
+    remoteTypeName: __typename
+    ..._CriticId_
+    ...Critic
+  }
+}
+
+fragment _CriticId_ on Critic {
+  remoteTypeName: __typename
+  remoteId: id
+}
+
+fragment Critic on Critic {
+  name
+}

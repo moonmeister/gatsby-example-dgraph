@@ -1,0 +1,182 @@
+query LIST_Performance($limit: Int, $offset: Int) {
+  queryPerformance(first: $limit, offset: $offset) {
+    remoteTypeName: __typename
+    ..._PerformanceId_
+    ...Actor__performances__0
+    ...FilmCopy__starring__0
+    ...Film__starring__0
+    ...Performance
+  }
+}
+
+fragment _PerformanceId_ on Performance {
+  remoteTypeName: __typename
+  remoteId: id
+}
+
+fragment Actor__performances__0 on Performance {
+  actor {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+  character {
+    ... on Character {
+      name
+      portrayed_in_films {
+        remoteTypeName: __typename
+        remoteId: id
+      }
+      portrayed_in_films_dubbed {
+        remoteTypeName: __typename
+        remoteId: id
+      }
+    }
+  }
+  character_note
+  films {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+  special_performance_type {
+    ... on SpecialPerformanceType {
+      name
+      performance_type {
+        remoteTypeName: __typename
+        remoteId: id
+      }
+    }
+  }
+  appearances {
+    ... on PersonalAppearance {
+      name
+      films {
+        remoteTypeName: __typename
+        remoteId: id
+      }
+      person {
+        ... on PersonOrEntityAppearingInFilm {
+          name
+          films {
+            remoteTypeName: __typename
+            remoteId: id
+          }
+          film {
+            remoteTypeName: __typename
+            remoteId: id
+          }
+        }
+      }
+      type_of_appearance {
+        ... on PersonalAppearanceType {
+          name
+        }
+      }
+      appearances {
+        remoteTypeName: __typename
+      }
+    }
+  }
+}
+
+fragment FilmCopy__starring__0 on Performance {
+  actor {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+  character {
+    ... on Character {
+      name
+      portrayed_in_films {
+        remoteTypeName: __typename
+        remoteId: id
+      }
+      portrayed_in_films_dubbed {
+        remoteTypeName: __typename
+        remoteId: id
+      }
+    }
+  }
+  character_note
+  films {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+  special_performance_type {
+    ... on SpecialPerformanceType {
+      name
+      performance_type {
+        remoteTypeName: __typename
+        remoteId: id
+      }
+    }
+  }
+  appearances {
+    ... on PersonalAppearance {
+      name
+      films {
+        remoteTypeName: __typename
+        remoteId: id
+      }
+      person {
+        ... on PersonOrEntityAppearingInFilm {
+          name
+          films {
+            remoteTypeName: __typename
+            remoteId: id
+          }
+          film {
+            remoteTypeName: __typename
+            remoteId: id
+          }
+        }
+      }
+      type_of_appearance {
+        ... on PersonalAppearanceType {
+          name
+        }
+      }
+      appearances {
+        remoteTypeName: __typename
+      }
+    }
+  }
+}
+
+fragment Film__starring__0 on Performance {
+  actor {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+  character_note
+  films {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+}
+
+fragment Performance on Performance {
+  actor {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+  character {
+    ... on Character {
+      remoteTypeName: __typename
+    }
+  }
+  character_note
+  films {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+  special_performance_type {
+    ... on SpecialPerformanceType {
+      remoteTypeName: __typename
+    }
+  }
+  appearances {
+    ... on PersonalAppearance {
+      remoteTypeName: __typename
+    }
+  }
+}

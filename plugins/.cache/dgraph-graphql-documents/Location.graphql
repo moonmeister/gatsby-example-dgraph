@@ -1,0 +1,115 @@
+query LIST_Location($limit: Int, $offset: Int) {
+  queryLocation(first: $limit, offset: $offset) {
+    remoteTypeName: __typename
+    ..._LocationId_
+    ...Film__country__0
+    ...Film__featured_locations__0
+    ...Film__festivals__0__location__0
+    ...Film__locations__0
+    ...Film__rating__0__country__0
+    ...Film__rating__0__rating_system__0__jurisdiction__0
+    ...Film__release_date_s__0__release_region__0
+    ...Location
+  }
+}
+
+fragment _LocationId_ on Location {
+  remoteTypeName: __typename
+  remoteId: id
+}
+
+fragment Film__country__0 on Location {
+  name
+  films {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+  featured_in_films {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+}
+
+fragment Film__featured_locations__0 on Location {
+  name
+  films {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+  featured_in_films {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+}
+
+fragment Film__festivals__0__location__0 on Location {
+  name
+  films {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+  featured_in_films {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+}
+
+fragment Film__locations__0 on Location {
+  name
+  films {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+  featured_in_films {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+}
+
+fragment Film__rating__0__country__0 on Location {
+  name
+  films {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+  featured_in_films {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+}
+
+fragment Film__rating__0__rating_system__0__jurisdiction__0 on Location {
+  name
+  films {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+  featured_in_films {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+}
+
+fragment Film__release_date_s__0__release_region__0 on Location {
+  name
+  films {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+  featured_in_films {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+}
+
+fragment Location on Location {
+  name
+  films {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+  featured_in_films {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+}

@@ -1,0 +1,29 @@
+query LIST_Director($limit: Int, $offset: Int) {
+  queryDirector(first: $limit, offset: $offset) {
+    remoteTypeName: __typename
+    ..._DirectorId_
+    ...Director
+    ...Film__directed_by__0
+  }
+}
+
+fragment _DirectorId_ on Director {
+  remoteTypeName: __typename
+  remoteId: id
+}
+
+fragment Director on Director {
+  name
+  films {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+}
+
+fragment Film__directed_by__0 on Director {
+  name
+  films {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+}

@@ -1,0 +1,29 @@
+query LIST_Format($limit: Int, $offset: Int) {
+  queryFormat(first: $limit, offset: $offset) {
+    remoteTypeName: __typename
+    ..._FormatId_
+    ...Film__format__0
+    ...Format
+  }
+}
+
+fragment _FormatId_ on Format {
+  remoteTypeName: __typename
+  remoteId: id
+}
+
+fragment Film__format__0 on Format {
+  name
+  format {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+}
+
+fragment Format on Format {
+  name
+  format {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+}

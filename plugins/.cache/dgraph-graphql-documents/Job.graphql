@@ -1,0 +1,20 @@
+query LIST_Job($limit: Int, $offset: Int) {
+  queryJob(first: $limit, offset: $offset) {
+    remoteTypeName: __typename
+    ..._JobId_
+    ...Job
+  }
+}
+
+fragment _JobId_ on Job {
+  remoteTypeName: __typename
+  remoteId: id
+}
+
+fragment Job on Job {
+  name
+  films {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+}

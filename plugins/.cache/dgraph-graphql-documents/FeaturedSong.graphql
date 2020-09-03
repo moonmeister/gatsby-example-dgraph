@@ -1,0 +1,24 @@
+query LIST_FeaturedSong($limit: Int, $offset: Int) {
+  queryFeaturedSong(first: $limit, offset: $offset) {
+    remoteTypeName: __typename
+    ..._FeaturedSongId_
+    ...FeaturedSong
+  }
+}
+
+fragment _FeaturedSongId_ on FeaturedSong {
+  remoteTypeName: __typename
+  remoteId: id
+}
+
+fragment FeaturedSong on FeaturedSong {
+  name
+  featured_in_film {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+  performed_by {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+}

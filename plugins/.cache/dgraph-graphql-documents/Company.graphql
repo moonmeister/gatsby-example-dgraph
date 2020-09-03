@@ -1,0 +1,20 @@
+query LIST_Company($limit: Int, $offset: Int) {
+  queryCompany(first: $limit, offset: $offset) {
+    remoteTypeName: __typename
+    ..._CompanyId_
+    ...Company
+  }
+}
+
+fragment _CompanyId_ on Company {
+  remoteTypeName: __typename
+  remoteId: id
+}
+
+fragment Company on Company {
+  name
+  films {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+}

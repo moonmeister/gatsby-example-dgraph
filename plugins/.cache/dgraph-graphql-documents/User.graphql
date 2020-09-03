@@ -1,0 +1,21 @@
+query LIST_USERS($limit: Int, $offset: Int) {
+  queryUser(first: $limit, offset: $offset) {
+    remoteTypeName: __typename
+    ..._UserId_
+    ...User
+  }
+}
+
+fragment _UserId_ on User {
+  remoteTypeName: __typename
+  remoteId: id
+}
+
+fragment User on User {
+  username
+  name
+  posts {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+}

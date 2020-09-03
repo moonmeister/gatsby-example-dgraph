@@ -1,0 +1,29 @@
+query LIST_Cinematographer($limit: Int, $offset: Int) {
+  queryCinematographer(first: $limit, offset: $offset) {
+    remoteTypeName: __typename
+    ..._CinematographerId_
+    ...Cinematographer
+    ...Film__cinematography__0
+  }
+}
+
+fragment _CinematographerId_ on Cinematographer {
+  remoteTypeName: __typename
+  remoteId: id
+}
+
+fragment Cinematographer on Cinematographer {
+  name
+  films {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+}
+
+fragment Film__cinematography__0 on Cinematographer {
+  name
+  films {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+}

@@ -1,0 +1,29 @@
+query LIST_ProductionDesigner($limit: Int, $offset: Int) {
+  queryProductionDesigner(first: $limit, offset: $offset) {
+    remoteTypeName: __typename
+    ..._ProductionDesignerId_
+    ...Film__production_design_by__0
+    ...ProductionDesigner
+  }
+}
+
+fragment _ProductionDesignerId_ on ProductionDesigner {
+  remoteTypeName: __typename
+  remoteId: id
+}
+
+fragment Film__production_design_by__0 on ProductionDesigner {
+  name
+  films {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+}
+
+fragment ProductionDesigner on ProductionDesigner {
+  name
+  films {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+}

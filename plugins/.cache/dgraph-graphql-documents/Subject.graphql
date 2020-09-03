@@ -1,0 +1,29 @@
+query LIST_Subject($limit: Int, $offset: Int) {
+  querySubject(first: $limit, offset: $offset) {
+    remoteTypeName: __typename
+    ..._SubjectId_
+    ...Film__subjects__0
+    ...Subject
+  }
+}
+
+fragment _SubjectId_ on Subject {
+  remoteTypeName: __typename
+  remoteId: id
+}
+
+fragment Film__subjects__0 on Subject {
+  name
+  films {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+}
+
+fragment Subject on Subject {
+  name
+  films {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+}

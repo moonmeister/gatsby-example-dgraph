@@ -1,0 +1,30 @@
+query LIST_Cut($limit: Int, $offset: Int) {
+  queryCut(first: $limit, offset: $offset) {
+    remoteTypeName: __typename
+    ..._CutId_
+    ...Cut
+  }
+}
+
+fragment _CutId_ on Cut {
+  remoteTypeName: __typename
+  remoteId: id
+}
+
+fragment Cut on Cut {
+  name
+  films {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+  note
+  release_region {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+  runtime
+  type_of_cut {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+}

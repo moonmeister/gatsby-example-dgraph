@@ -1,0 +1,29 @@
+query LIST_CostumeDesigner($limit: Int, $offset: Int) {
+  queryCostumeDesigner(first: $limit, offset: $offset) {
+    remoteTypeName: __typename
+    ..._CostumeDesignerId_
+    ...CostumeDesigner
+    ...Film__costume_design_by__0
+  }
+}
+
+fragment _CostumeDesignerId_ on CostumeDesigner {
+  remoteTypeName: __typename
+  remoteId: id
+}
+
+fragment CostumeDesigner on CostumeDesigner {
+  name
+  costume_design_for_film {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+}
+
+fragment Film__costume_design_by__0 on CostumeDesigner {
+  name
+  costume_design_for_film {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+}

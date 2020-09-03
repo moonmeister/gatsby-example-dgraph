@@ -1,0 +1,20 @@
+query LIST_DistributionMedium($limit: Int, $offset: Int) {
+  queryDistributionMedium(first: $limit, offset: $offset) {
+    remoteTypeName: __typename
+    ..._DistributionMediumId_
+    ...DistributionMedium
+  }
+}
+
+fragment _DistributionMediumId_ on DistributionMedium {
+  remoteTypeName: __typename
+  remoteId: id
+}
+
+fragment DistributionMedium on DistributionMedium {
+  name
+  films {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+}

@@ -1,0 +1,29 @@
+query LIST_Editor($limit: Int, $offset: Int) {
+  queryEditor(first: $limit, offset: $offset) {
+    remoteTypeName: __typename
+    ..._EditorId_
+    ...Editor
+    ...Film__edited_by__0
+  }
+}
+
+fragment _EditorId_ on Editor {
+  remoteTypeName: __typename
+  remoteId: id
+}
+
+fragment Editor on Editor {
+  name
+  film {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+}
+
+fragment Film__edited_by__0 on Editor {
+  name
+  film {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+}

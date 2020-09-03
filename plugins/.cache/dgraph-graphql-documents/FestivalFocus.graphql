@@ -1,0 +1,29 @@
+query LIST_FestivalFocus($limit: Int, $offset: Int) {
+  queryFestivalFocus(first: $limit, offset: $offset) {
+    remoteTypeName: __typename
+    ..._FestivalFocusId_
+    ...FestivalFocus
+    ...Film__festivals__0__focus__0
+  }
+}
+
+fragment _FestivalFocusId_ on FestivalFocus {
+  remoteTypeName: __typename
+  remoteId: id
+}
+
+fragment FestivalFocus on FestivalFocus {
+  name
+  festivals {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+}
+
+fragment Film__festivals__0__focus__0 on FestivalFocus {
+  name
+  festivals {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+}

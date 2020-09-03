@@ -1,0 +1,29 @@
+query LIST_StoryContributor($limit: Int, $offset: Int) {
+  queryStoryContributor(first: $limit, offset: $offset) {
+    remoteTypeName: __typename
+    ..._StoryContributorId_
+    ...Film__story_by__0
+    ...StoryContributor
+  }
+}
+
+fragment _StoryContributorId_ on StoryContributor {
+  remoteTypeName: __typename
+  remoteId: id
+}
+
+fragment Film__story_by__0 on StoryContributor {
+  name
+  story_credits {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+}
+
+fragment StoryContributor on StoryContributor {
+  name
+  story_credits {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+}

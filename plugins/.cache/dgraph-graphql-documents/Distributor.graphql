@@ -1,0 +1,29 @@
+query LIST_Distributor($limit: Int, $offset: Int) {
+  queryDistributor(first: $limit, offset: $offset) {
+    remoteTypeName: __typename
+    ..._DistributorId_
+    ...Distributor
+    ...Film__distributors__0
+  }
+}
+
+fragment _DistributorId_ on Distributor {
+  remoteTypeName: __typename
+  remoteId: id
+}
+
+fragment Distributor on Distributor {
+  name
+  films_distributed {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+}
+
+fragment Film__distributors__0 on Distributor {
+  name
+  films_distributed {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+}

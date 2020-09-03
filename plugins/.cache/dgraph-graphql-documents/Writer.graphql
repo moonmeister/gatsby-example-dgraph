@@ -1,0 +1,29 @@
+query LIST_Writer($limit: Int, $offset: Int) {
+  queryWriter(first: $limit, offset: $offset) {
+    remoteTypeName: __typename
+    ..._WriterId_
+    ...Film__written_by__0
+    ...Writer
+  }
+}
+
+fragment _WriterId_ on Writer {
+  remoteTypeName: __typename
+  remoteId: id
+}
+
+fragment Film__written_by__0 on Writer {
+  name
+  films {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+}
+
+fragment Writer on Writer {
+  name
+  films {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+}

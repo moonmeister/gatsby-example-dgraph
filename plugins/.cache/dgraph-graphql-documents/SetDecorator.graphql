@@ -1,0 +1,29 @@
+query LIST_SetDecorator($limit: Int, $offset: Int) {
+  querySetDecorator(first: $limit, offset: $offset) {
+    remoteTypeName: __typename
+    ..._SetDecoratorId_
+    ...Film__set_decoration_by__0
+    ...SetDecorator
+  }
+}
+
+fragment _SetDecoratorId_ on SetDecorator {
+  remoteTypeName: __typename
+  remoteId: id
+}
+
+fragment Film__set_decoration_by__0 on SetDecorator {
+  name
+  sets_designed {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+}
+
+fragment SetDecorator on SetDecorator {
+  name
+  sets_designed {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+}

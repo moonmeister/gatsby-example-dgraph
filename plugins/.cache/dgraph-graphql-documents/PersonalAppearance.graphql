@@ -1,0 +1,95 @@
+query LIST_PersonalAppearance($limit: Int, $offset: Int) {
+  queryPersonalAppearance(first: $limit, offset: $offset) {
+    remoteTypeName: __typename
+    ..._PersonalAppearanceId_
+    ...Actor__performances__0__appearances__0
+    ...Film__personal_appearances__0
+    ...Film__starring__0__appearances__0
+    ...PersonalAppearance
+  }
+}
+
+fragment _PersonalAppearanceId_ on PersonalAppearance {
+  remoteTypeName: __typename
+  remoteId: id
+}
+
+fragment Actor__performances__0__appearances__0 on PersonalAppearance {
+  name
+  films {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+  person {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+  type_of_appearance {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+  appearances {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+}
+
+fragment Film__personal_appearances__0 on PersonalAppearance {
+  name
+  films {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+  person {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+  type_of_appearance {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+  appearances {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+}
+
+fragment Film__starring__0__appearances__0 on PersonalAppearance {
+  name
+  films {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+  person {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+  type_of_appearance {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+  appearances {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+}
+
+fragment PersonalAppearance on PersonalAppearance {
+  name
+  films {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+  person {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+  type_of_appearance {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+  appearances {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+}

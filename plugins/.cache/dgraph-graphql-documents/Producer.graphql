@@ -1,0 +1,50 @@
+query LIST_Producer($limit: Int, $offset: Int) {
+  queryProducer(first: $limit, offset: $offset) {
+    remoteTypeName: __typename
+    ..._ProducerId_
+    ...Film__executive_produced_by__0
+    ...Film__produced_by__0
+    ...Producer
+  }
+}
+
+fragment _ProducerId_ on Producer {
+  remoteTypeName: __typename
+  remoteId: id
+}
+
+fragment Film__executive_produced_by__0 on Producer {
+  name
+  films {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+  films_executive_produced {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+}
+
+fragment Film__produced_by__0 on Producer {
+  name
+  films {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+  films_executive_produced {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+}
+
+fragment Producer on Producer {
+  name
+  films {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+  films_executive_produced {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+}

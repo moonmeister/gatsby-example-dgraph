@@ -1,0 +1,31 @@
+query LIST_RegionalReleaseDate($limit: Int, $offset: Int) {
+  queryRegionalReleaseDate(first: $limit, offset: $offset) {
+    remoteTypeName: __typename
+    ..._RegionalReleaseDateId_
+    ...Film__release_date_s__0
+    ...RegionalReleaseDate
+  }
+}
+
+fragment _RegionalReleaseDateId_ on RegionalReleaseDate {
+  remoteTypeName: __typename
+  remoteId: id
+}
+
+fragment Film__release_date_s__0 on RegionalReleaseDate {
+  name
+  release_date
+  release_region {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+}
+
+fragment RegionalReleaseDate on RegionalReleaseDate {
+  name
+  release_date
+  release_region {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+}

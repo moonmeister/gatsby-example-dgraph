@@ -1,0 +1,37 @@
+query LIST_RatingSystem($limit: Int, $offset: Int) {
+  queryRatingSystem(first: $limit, offset: $offset) {
+    remoteTypeName: __typename
+    ..._RatingSystemId_
+    ...Film__rating__0__rating_system__0
+    ...RatingSystem
+  }
+}
+
+fragment _RatingSystemId_ on RatingSystem {
+  remoteTypeName: __typename
+  remoteId: id
+}
+
+fragment Film__rating__0__rating_system__0 on RatingSystem {
+  name
+  ratings {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+  jurisdiction {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+}
+
+fragment RatingSystem on RatingSystem {
+  name
+  ratings {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+  jurisdiction {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+}

@@ -1,0 +1,28 @@
+query LIST_CrewGig($limit: Int, $offset: Int) {
+  queryCrewGig(first: $limit, offset: $offset) {
+    remoteTypeName: __typename
+    ..._CrewGigId_
+    ...CrewGig
+  }
+}
+
+fragment _CrewGigId_ on CrewGig {
+  remoteTypeName: __typename
+  remoteId: id
+}
+
+fragment CrewGig on CrewGig {
+  name
+  crew_role {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+  crewmember {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+  films {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+}

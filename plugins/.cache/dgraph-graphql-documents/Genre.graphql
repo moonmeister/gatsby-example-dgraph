@@ -1,0 +1,29 @@
+query LIST_Genre($limit: Int, $offset: Int) {
+  queryGenre(first: $limit, offset: $offset) {
+    remoteTypeName: __typename
+    ..._GenreId_
+    ...Film__genre__0
+    ...Genre
+  }
+}
+
+fragment _GenreId_ on Genre {
+  remoteTypeName: __typename
+  remoteId: id
+}
+
+fragment Film__genre__0 on Genre {
+  name
+  films {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+}
+
+fragment Genre on Genre {
+  name
+  films {
+    remoteTypeName: __typename
+    remoteId: id
+  }
+}
