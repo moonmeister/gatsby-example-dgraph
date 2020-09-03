@@ -12,8 +12,8 @@ module.exports = {
       resolve: `gatsby-source-dgraph`,
       options: {
         endpoint: process.env.GATSBY_SLASH_GRPAHQL_ENDPOINT || `https://vague-bell.us-west-2.aws.cloud.dgraph.io/graphql`,
-        include: [`Film`,],
-        limit: 10
+        include: [`Film`, `Actor`],
+        limit: 25
       }
     },
     {
@@ -26,5 +26,6 @@ module.exports = {
         plugins: [`gatsby-tinacms-dgraph`],
       },
     },
+    `abhi-plugin-fastly`,
   ],
 }

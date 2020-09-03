@@ -22,14 +22,14 @@ fragment Film on Film {
           name
           performances {
             ... on Performance {
-                remoteId: id
-                character {
-                  ... on Character {
-                    remoteId: id
-                    name
-                  }
+              remoteId: id
+              character {
+                ... on Character {
+                  remoteId: id
+                  name
                 }
               }
+            }
           }
         }
       }

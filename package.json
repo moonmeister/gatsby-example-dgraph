@@ -7,6 +7,7 @@
   "author": "Alex Moon <alex.jared.moon@gmail.com>",
   "license": "0BSD",
   "dependencies": {
+    "abhi-plugin-fastly": "^2.4.0",
     "cross-env": "^7.0.2",
     "dotenv": "^8.2.0",
     "gatsby": "^2.24.47",
