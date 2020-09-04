@@ -14,7 +14,7 @@ function Layout({ children, enableEditing = false, explain }) {
   loginState && enableEditing ? cms.enable() : cms.disable()
 
 
-  const { data: { site: { siteMetadata: { branch } } } } = useStaticQuery(graphql`
+  const { site: { siteMetadata: { branch } } } = useStaticQuery(graphql`
     {
       site {
         siteMetadata {
