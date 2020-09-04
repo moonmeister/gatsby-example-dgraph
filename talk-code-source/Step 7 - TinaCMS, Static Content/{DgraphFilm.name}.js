@@ -3,7 +3,6 @@ import { graphql, unstable_collectionGraphql, Link } from "gatsby"
 import { useForm, usePlugin, useCMS } from 'tinacms'
 
 import Layout from "../../components/Layout"
-import { triggerRefresh } from "../../lib/webhook"
 import { graphqlCRUD } from "../../lib/graphql"
 
 export default function FilmPage({ data }) {
@@ -57,8 +56,6 @@ export default function FilmPage({ data }) {
         } else {
           cms.alerts.success('Saved Content!');
         }
-
-        await triggerRefresh([{ remoteTypeName: 'Film', eventName: "UPDATE", remoteId: { id: film.remoteId } }])
 
       } catch (err) {
         console.error(err)
