@@ -31,7 +31,7 @@ Join us to learn more about building highly scalable web apps deployed at the ed
 
 ## The Site
 
-Check this out in production: http://moviedatabase.moonmeister.net
+Check out the live site @ http://moviedatabase.moonmeister.net
 
 Info: 
 - Built and deployed using [Gatsby Cloud](https://www.gatsbyjs.com/cloud/)
@@ -41,5 +41,6 @@ Info:
 
 This code is known to not be the best way to do things and even has KNOWN bugs. 
 
+See the talk for more info...or maybe I'll add some one day (Honest me: Yeah, that's not going to happen.)
 
 
