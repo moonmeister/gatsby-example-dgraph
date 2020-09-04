@@ -1,6 +1,5 @@
 import * as React from "react"
 import { graphql, Link } from "gatsby"
-import slugify from "slugify"
 import Layout from "../../components/Layout"
 
 export default function FilmPage({ data }) {
@@ -12,14 +11,11 @@ export default function FilmPage({ data }) {
       <h1>Films</h1>
       <ul>
         {
-          allFilms.map(film => {
-            const [slug] = slugify(film?.name, {
-              lower: true,
-            }).split('.')
+          allFilms.map(({ name, gatsbyPath, remoteId }) => {
             return (
-              <li key={film.remoteId}>
+              <li key={remoteId}>
                 <article >
-                  <Link to={`/film/${slug}`}><h2>{film?.name}</h2></Link>
+                  <Link to={gatsbyPath}><h2>{name}</h2></Link>
                 </article>
               </li>
             )
@@ -34,8 +30,9 @@ export const query = graphql`
   query ListFilms {
     allDgraphFilm(sort: {order: ASC, fields: name}) {
       nodes {
-        name
         remoteId
+        name
+        gatsbyPath(filePath: "/film/{DgraphFilm.name}")
       }
     }
   }
