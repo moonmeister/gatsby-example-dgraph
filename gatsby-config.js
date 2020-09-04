@@ -5,7 +5,11 @@ if (!process.env.GATSBY_CLOUD) {
 }
 
 module.exports = {
+  siteMetadata: {
+    branch: process.env.BRANCH || "Development",
+  },
   plugins: [
+    `gatsby-plugin-react-helmet`,
     `gatsby-plugin-preact`,
     'gatsby-plugin-linaria',
     {

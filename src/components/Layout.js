@@ -1,7 +1,8 @@
 import * as React from "react"
+import { Helmet } from "react-helmet"
 
 import { useLocalStorage } from "../hooks/useLocalStorage"
-import { Link } from "gatsby"
+import { Link, useStaticQuery, graphql } from "gatsby"
 import { useCMS } from 'tinacms'
 
 import { css } from "linaria"
@@ -11,6 +12,17 @@ function Layout({ children, enableEditing = false, explain }) {
   const [loginState, setLoginState] = useLocalStorage('authenticated', false)
 
   loginState && enableEditing ? cms.enable() : cms.disable()
+
+
+  const { site: { siteMetadata: { branch } } } = useStaticQuery(graphql`
+    {
+      site {
+        siteMetadata {
+          branch
+        }
+      }
+    }
+  `)
   return (
     <div className={css`
       display: grid;
@@ -19,10 +31,12 @@ function Layout({ children, enableEditing = false, explain }) {
         "header"
         "content"
         "footer";
-
       grid-template-rows: auto 1fr auto;
       gap: 1em
   `}>
+      <Helmet>
+        <title>{branch} | Movie Database Dgraph + TinaCMS + Gatsby</title>
+      </Helmet>
       <header className={css`
         grid-area: header;
         display: flex;
