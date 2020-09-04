@@ -1,5 +1,5 @@
 import * as React from "react"
-import { graphql } from "gatsby"
+import { graphql, Link } from "gatsby"
 import Layout from "../../components/Layout"
 
 export default function FilmPage({ data }) {
@@ -11,10 +11,12 @@ export default function FilmPage({ data }) {
       <h1>Films</h1>
       <ul>
         {
-          allFilms.map(({ name, remoteId }) => {
+          allFilms.map(({ name, gatsbyPath, remoteId }) => {
             return (
               <li key={remoteId}>
-                <h2>{name}</h2>
+                <article >
+                  <Link to={gatsbyPath}><h2>{name}</h2></Link>
+                </article>
               </li>
             )
           })
@@ -30,6 +32,7 @@ export const query = graphql`
       nodes {
         remoteId
         name
+        gatsbyPath(filePath: "/film/{DgraphFilm.name}")
       }
     }
   }
