@@ -1,11 +1,12 @@
 import * as React from "react"
 import Layout from "../../components/Layout"
-import { useForm, usePlugin } from 'tinacms'
+import { useForm, usePlugin, useCMS } from 'tinacms'
 
 import { graphqlCRUD } from "../../lib/graphql"
 
 export default function ActorPage({ params }) {
   const { id } = params
+  const cms = useCMS()
 
   const formConfig = {
     id: 'dgraph-tina-actor',
@@ -18,6 +19,8 @@ export default function ActorPage({ params }) {
       },
     ],
     loadInitialValues: async () => {
+      console.debug("Loading inital values")
+
       try {
         const { data: { getActor } } = await graphqlCRUD({
           query: `query fetchActor($id: ID!) {
@@ -44,6 +47,39 @@ export default function ActorPage({ params }) {
       }
 
     },
+    onSubmit: async (formData) => {
+      cms.alerts.info('Saving Content...')
+      try {
+
+        const data = await graphqlCRUD({
+          query: `
+            mutation updateActor($patch: UpdateActorInput!) {
+              updateActor(input: $patch) {
+                actor {
+                  id
+                }
+              }
+            }
+            `, variables: {
+            patch: {
+              filter: { id: [id] },
+              set: {
+                name: formData.name
+              },
+            }
+          }, operationName: `updateActor`
+        })
+
+        if (data?.errors) {
+          console.error(data.errors[0].message)
+          cms.alerts.error(data.errors[0].message)
+        } else {
+          cms.alerts.success('Saved Content!');
+        }
+      } catch (err) {
+        console.error(err)
+      }
+    },
   }
 
   const [actorData, form] = useForm(formConfig)
@@ -64,5 +100,6 @@ export default function ActorPage({ params }) {
             <h1>Loading page...</h1>
       }
     </Layout>
+
   )
 }
