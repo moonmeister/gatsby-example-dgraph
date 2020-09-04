@@ -128,17 +128,15 @@ async function getSourcingConfig(gatsbyApi, pluginOptions) {
 }
 
 function createExecute(pluginOptions) {
-  const { endpoint, token } = pluginOptions
+  const { endpoint } = pluginOptions
 
   return async function execute({ operationName, query, variables = {} }) {
-    // console.log('query: ', JSON.stringify(query, null, 2))
 
     const res = await fetch(endpoint, {
       method: "POST",
       body: JSON.stringify({ query, variables, operationName }),
       headers: {
         "Content-Type": "application/json",
-        "X-Auth-Token": `${token}`,
       },
     })
     const data = await res.json()
