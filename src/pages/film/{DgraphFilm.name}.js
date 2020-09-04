@@ -57,7 +57,7 @@ export default function FilmPage({ data }) {
         } else {
           cms.alerts.success('Saved Content!');
 
-          await triggerRefresh([{ remoteTypeName: 'Film', eventName: "UPDATE", remoteId: { id: film.remoteId } }]
+          await triggerRefresh([{ remoteTypeName: 'Film', eventName: "UPDATE", remoteId: { id: film.remoteId } }])
         }
 
 
