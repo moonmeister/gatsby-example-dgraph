@@ -23,12 +23,12 @@ export default function ActorPage({ params }) {
           query: `query fetchActor($id: ID!) {
               getActor(id: $id) {
                 name
-              performances {
-                character {
-                  id
-                  name
+                performances {
+                  character {
+                    id
+                    name
+                  }
                 }
-              }
             }
           }`,
           variables: {
