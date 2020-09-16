@@ -2,7 +2,7 @@
 
 This was built for a talk first given at [GraphQL in Space](https://www.graphqlcon.space/) in September of 2020. Feel free to use this as a reference to understand the various technologies. 
 
-> ⚠️**DISCLAIMER**⚠️: This code and methods it takes to acomplish certain tasks (especially incremental builds) were thrown together in less than a week as a proof of concept for a conference talk. There's how I would acomplish this in production, then there is the steaming pile of 💩 that is this code. Proceed at your own risk and feel free to ask quesitons. 
+> ⚠️**DISCLAIMER**⚠️: This code and methods it takes to acomplish certain tasks (especially incremental builds) were thrown together in less than a week as a proof of concept for a conference talk. There's how I would acomplish this in production, then there is this steaming pile of 💩. Proceed at your own risk and feel free to ask quesitons. 
 
 ## The Talk
 
