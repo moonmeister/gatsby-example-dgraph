@@ -8,7 +8,7 @@ This was built for a talk first given at [GraphQL in Space](https://www.graphqlc
 
   - AMA: https://discuss.dgraph.io/t/alex-moon-serverless-web-apps-with-gatsby-dgraph-tinacms/9979
   - Slides: https://docs.google.com/presentation/d/1Lhvh4dDwpYOpx7BVafXIM-RU5KxXojlFTN0g3attCWQ/edit?usp=sharing
-  - Video: https://youtu.be/G9BduVR3h1E?t=9721
+  - Video: https://youtu.be/MS4_WE9iQnE
   - Find all my social links and ways to contact me on my site @ https://moonmeister.net
 
 ### Serverless Web Apps with Gatsby + Dgraph + TinaCMS
